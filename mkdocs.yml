@@ -1,0 +1,45 @@
+site_name: USTC 编译原理和技术(H) 2025
+repo_name: ustc-compiler/2025fall
+repo_url: https://github.com/ustc-compiler/2025fall
+theme:
+  name: 'material'
+  palette:
+    primary: 'black'
+  language: 'zh'
+  features:
+    - content.code.copy
+    - navigation.tabs
+    - toc.integrate
+markdown_extensions:
+  - mdx_spanner # Markdown Table Merge Cells. See https://pypi.org/project/mdx-spanner/
+  - admonition  # extension for !!! note. See https://python-markdown.github.io/extensions/admonition/
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - codehilite
+  - footnotes
+  - pymdownx.details
+  - mdx_truly_sane_lists
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      permalink: true
+      slugify: !!python/name:markdown.extensions.toc.slugify_unicode
+extra_javascript:
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+extra_css:
+  - https://unpkg.com/katex@0/dist/katex.min.css
+nav:
+  - 首页: README.md
+  - 课程安排: schedule.md
+  - 公共文档:
+    - C++ 介绍: common/simple_cpp.md
+    - IDE 配置: common/ide.md
+    - 平台介绍:
+      - 头歌平台: common/educoder.md
+  - 拓展阅读:
+    - 从词法分析到LLM Tokenizer: further/tokenizer.md
+    - 其他: further/further.md

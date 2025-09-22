@@ -1,0 +1,29 @@
+{
+  "name": "2025fall",
+  "version": "1.0.0",
+  "description": "课程主页",
+  "private": true,
+  "scripts": {
+    "test": "prettier --check docs && autocorrect --lint docs",
+    "format": "prettier --write docs && autocorrect --fix docs",
+    "dev": "mkdocs serve",
+    "build": "mkdocs build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ustc-compiler/2025"
+  },
+  "keywords": [
+    "ustc",
+    "course"
+  ],
+  "author": "2025",
+  "bugs": {
+    "url": "https://github.com/ustc-compiler/2025/issues"
+  },
+  "homepage": "https://github.com/ustc-compiler/2025#readme",
+  "dependencies": {
+    "autocorrect-node": "^2.14.0",
+    "prettier": "^3.1.0"
+  }
+}
