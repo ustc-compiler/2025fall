@@ -6,19 +6,19 @@ on:
       - main
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - run: pip install -r requirements.txt
       - uses: actions/setup-node@v5
         with:
           node-version: '23'
+          cache: 'npm'
       - run: npm install
       - run: npm test
 
   deploy:
-    needs: build
+    needs: check
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'ustc-compiler/2025fall'
     steps:
