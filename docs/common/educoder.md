@@ -8,6 +8,8 @@
 
 **视频勘误**: git 仓库克隆时所需用户名为仓库 URL `http://educoder.ustc.edu.cn/<username>/<reponame>.git` 的 `username` 部分，密码为平台登录时使用的密码。
 
+头歌平台使用手册：[educoder-student-manual.docx](./educoder-student-manual.docx)
+
 ## 头歌平台在线实验
 
 自 2019 年起在 Educoder 平台部署系列编译实验并不断更新，实际部署的实践项目数超过 30 个。截止目前，形成的最新的贯穿编译系统全流程的系列实验及其链接如下表，共计 12 个，这 12 个实验在超星平台均有对应的实践指导授课视频。
