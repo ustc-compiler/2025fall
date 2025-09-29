@@ -4,7 +4,7 @@ repo_url: https://github.com/ustc-compiler/2025fall
 theme:
   name: 'material'
   palette:
-    primary: 'black'
+    primary: 'red'
   language: 'zh'
   features:
     - content.code.copy
@@ -32,6 +32,7 @@ extra_javascript:
   - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
 extra_css:
   - https://unpkg.com/katex@0/dist/katex.min.css
+  - stylesheets/extra.css # css for emoji/icon color, see https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#with-colors
 nav:
   - 首页: README.md
   - 课程安排: schedule.md
