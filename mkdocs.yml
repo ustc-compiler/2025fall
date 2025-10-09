@@ -4,7 +4,7 @@ repo_url: https://github.com/ustc-compiler/2025fall
 theme:
   name: 'material'
   palette:
-    primary: 'red'
+    primary: 'black'
   language: 'zh'
   features:
     - content.code.copy
