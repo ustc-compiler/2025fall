@@ -37,3 +37,5 @@
 | 1        | 09-18    | [:link:](https://educoder.ustc.edu.cn/classrooms/212/shixun_homework/495/detail?tabs=0) L1. 词法分析器的构造                           | 09-29    |
 | X2       | 09-18    | [:link:](https://educoder.ustc.edu.cn/classrooms/212/shixun_homework/497/detail?tabs=0) X2. 理解和使用 C++ 的智能指针 (选做)           | 09-29    |
 | X1       | 09-18    | [:link:](https://educoder.ustc.edu.cn/classrooms/212/shixun_homework/496/detail?tabs=0) X1. 理解和使用 C++ 运行时类型信息 (RTTI)(选做) | 09-29    |
+
+> [头歌平台使用与往期在线实验](./common/educoder.md)
