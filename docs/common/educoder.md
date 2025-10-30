@@ -41,7 +41,7 @@
 | Clang AST 及其编程接口讲解        | [https://www.bilibili.com/video/BV1zq4y1S75J/](https://www.bilibili.com/video/BV1zq4y1S75J/) |
 | ANTLR 解析原理                    | [https://www.bilibili.com/video/BV1AR4y1o78H/](https://www.bilibili.com/video/BV1AR4y1o78H/) |
 | LLVM IR 介绍                      | [https://www.bilibili.com/video/BV1P3411B7YB/](https://www.bilibili.com/video/BV1P3411B7YB/) |
-| 从 AST 语法树生成 LLVMIR 的讲解   | [https://www.bilibili.com/video/BV1ab4y1S7K3/](https://www.bilibili.com/video/BV1ab4y1S7K3/) |
+| 从 AST 语法树生成 LLVM IR 的讲解  | [https://www.bilibili.com/video/BV1ab4y1S7K3/](https://www.bilibili.com/video/BV1ab4y1S7K3/) |
 | LLVM 驱动程序框架的讲解           | [https://www.bilibili.com/video/BV1sv411N76s/](https://www.bilibili.com/video/BV1sv411N76s/) |
 | 循环与优化讲解                    | [https://www.bilibili.com/video/BV1E341167vm/](https://www.bilibili.com/video/BV1E341167vm/) |
 | 继承属性的自下而上计算            | [https://www.bilibili.com/video/BV1QG4y187P7/](https://www.bilibili.com/video/BV1QG4y187P7/) |
