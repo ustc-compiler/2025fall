@@ -21,6 +21,9 @@ markdown_extensions:
   - footnotes
   - pymdownx.details
   - mdx_truly_sane_lists
+  - pymdownx.caret # for mark, ins and del HTML tags
+  - pymdownx.mark  # for mark, ins and del HTML tags
+  - pymdownx.tilde # for mark, ins and del HTML tags
   - pymdownx.arithmatex:
       generic: true
   - toc:
@@ -42,5 +45,6 @@ nav:
     - 平台介绍:
       - 头歌平台: common/educoder.md
   - 拓展阅读:
-    - 从词法分析到LLM Tokenizer: further/tokenizer.md
+    - 词法分析:
+      - 从词法分析到LLM Tokenizer: further/lexer/tokenizer.md
     - 其他: further/further.md
