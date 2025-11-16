@@ -1,0 +1,344 @@
+==================================================
+编译的输入字节码
+              0 COPY_FREE_VARS           1
+
+ 68           2 RESUME                   0
+
+ 70           4 PUSH_NULL
+              6 LOAD_DEREF               2 (fn)
+              8 LOAD_FAST                0 (args)
+             10 BUILD_MAP                0
+             12 LOAD_FAST                1 (kwargs)
+             14 DICT_MERGE               1
+             16 CALL_FUNCTION_EX         1
+             18 RETURN_VALUE
+None
+
+==================================================
+由字节码符号执行得到的 Fx Graph
+class GraphModule(torch.nn.Module):
+    def forward(self, L_fn_modules_fc_0_parameters_weight_: "f16[128, 128]", L_fn_modules_fc_0_parameters_bias_: "f16[128]", L_args_0_: "f16[32, 128]", L_fn_modules_ln_0_parameters_weight_: "f16[128]", L_fn_modules_ln_0_parameters_bias_: "f16[128]", L_fn_modules_fc_1_parameters_weight_: "f16[128, 128]", L_fn_modules_fc_1_parameters_bias_: "f16[128]", L_fn_modules_ln_1_parameters_weight_: "f16[128]", L_fn_modules_ln_1_parameters_bias_: "f16[128]", L_fn_modules_fc_2_parameters_weight_: "f16[128, 128]", L_fn_modules_fc_2_parameters_bias_: "f16[128]", L_fn_modules_ln_2_parameters_weight_: "f16[128]", L_fn_modules_ln_2_parameters_bias_: "f16[128]"):
+        l_fn_modules_fc_0_parameters_weight_ = L_fn_modules_fc_0_parameters_weight_
+        l_fn_modules_fc_0_parameters_bias_ = L_fn_modules_fc_0_parameters_bias_
+        l_args_0_ = L_args_0_
+        l_fn_modules_ln_0_parameters_weight_ = L_fn_modules_ln_0_parameters_weight_
+        l_fn_modules_ln_0_parameters_bias_ = L_fn_modules_ln_0_parameters_bias_
+        l_fn_modules_fc_1_parameters_weight_ = L_fn_modules_fc_1_parameters_weight_
+        l_fn_modules_fc_1_parameters_bias_ = L_fn_modules_fc_1_parameters_bias_
+        l_fn_modules_ln_1_parameters_weight_ = L_fn_modules_ln_1_parameters_weight_
+        l_fn_modules_ln_1_parameters_bias_ = L_fn_modules_ln_1_parameters_bias_
+        l_fn_modules_fc_2_parameters_weight_ = L_fn_modules_fc_2_parameters_weight_
+        l_fn_modules_fc_2_parameters_bias_ = L_fn_modules_fc_2_parameters_bias_
+        l_fn_modules_ln_2_parameters_weight_ = L_fn_modules_ln_2_parameters_weight_
+        l_fn_modules_ln_2_parameters_bias_ = L_fn_modules_ln_2_parameters_bias_
+        
+         # File: /mnt/pytorch/torch/_dynamo/external_utils.py:70 in inner, code: return fn(*args, **kwargs)
+        input_1: "f16[32, 128]" = torch._C._nn.linear(l_args_0_, l_fn_modules_fc_0_parameters_weight_, l_fn_modules_fc_0_parameters_bias_);  l_args_0_ = l_fn_modules_fc_0_parameters_weight_ = l_fn_modules_fc_0_parameters_bias_ = None
+        input_2: "f16[32, 128]" = torch.nn.functional.layer_norm(input_1, (128,), l_fn_modules_ln_0_parameters_weight_, l_fn_modules_ln_0_parameters_bias_, 1e-05);  input_1 = l_fn_modules_ln_0_parameters_weight_ = l_fn_modules_ln_0_parameters_bias_ = None
+        input_3: "f16[32, 128]" = torch.nn.functional.silu(input_2, inplace = False);  input_2 = None
+        input_4: "f16[32, 128]" = torch._C._nn.linear(input_3, l_fn_modules_fc_1_parameters_weight_, l_fn_modules_fc_1_parameters_bias_);  input_3 = l_fn_modules_fc_1_parameters_weight_ = l_fn_modules_fc_1_parameters_bias_ = None
+        input_5: "f16[32, 128]" = torch.nn.functional.layer_norm(input_4, (128,), l_fn_modules_ln_1_parameters_weight_, l_fn_modules_ln_1_parameters_bias_, 1e-05);  input_4 = l_fn_modules_ln_1_parameters_weight_ = l_fn_modules_ln_1_parameters_bias_ = None
+        input_6: "f16[32, 128]" = torch.nn.functional.silu(input_5, inplace = False);  input_5 = None
+        input_7: "f16[32, 128]" = torch._C._nn.linear(input_6, l_fn_modules_fc_2_parameters_weight_, l_fn_modules_fc_2_parameters_bias_);  input_6 = l_fn_modules_fc_2_parameters_weight_ = l_fn_modules_fc_2_parameters_bias_ = None
+        input_8: "f16[32, 128]" = torch.nn.functional.layer_norm(input_7, (128,), l_fn_modules_ln_2_parameters_weight_, l_fn_modules_ln_2_parameters_bias_, 1e-05);  input_7 = l_fn_modules_ln_2_parameters_weight_ = l_fn_modules_ln_2_parameters_bias_ = None
+        input_9: "f16[32, 128]" = torch.nn.functional.silu(input_8, inplace = False);  input_8 = None
+        return (input_9,)
+        
+
+==================================================
+将 python api 分解为 ATen 级算子后的 Fx Graph
+class <lambda>(torch.nn.Module):
+    def forward(self, arg0_1: "f16[128, 128]", arg1_1: "f16[128]", arg2_1: "f16[32, 128]", arg3_1: "f16[128]", arg4_1: "f16[128]", arg5_1: "f16[128, 128]", arg6_1: "f16[128]", arg7_1: "f16[128]", arg8_1: "f16[128]", arg9_1: "f16[128, 128]", arg10_1: "f16[128]", arg11_1: "f16[128]", arg12_1: "f16[128]"):
+         # File: /mnt/pytorch/torch/_dynamo/external_utils.py:70 in inner, code: return fn(*args, **kwargs)
+        permute: "f16[128, 128]" = torch.ops.aten.permute.default(arg0_1, [1, 0]);  arg0_1 = None
+        
+        # No stacktrace found for following nodes
+        mm_default_2: "f16[32, 128]" = torch.ops.aten.mm.default(arg2_1, permute);  arg2_1 = permute = None
+        add_tensor_2: "f16[32, 128]" = torch.ops.aten.add.Tensor(mm_default_2, arg1_1);  mm_default_2 = arg1_1 = None
+        
+         # File: /mnt/pytorch/torch/_dynamo/external_utils.py:70 in inner, code: return fn(*args, **kwargs)
+        convert_element_type_3: "f32[32, 128]" = torch.ops.prims.convert_element_type.default(add_tensor_2, torch.float32);  add_tensor_2 = None
+        var_mean = torch.ops.aten.var_mean.correction(convert_element_type_3, [1], correction = 0, keepdim = True)
+        getitem: "f32[32, 1]" = var_mean[0]
+        getitem_1: "f32[32, 1]" = var_mean[1];  var_mean = None
+        sub: "f32[32, 128]" = torch.ops.aten.sub.Tensor(convert_element_type_3, getitem_1);  convert_element_type_3 = getitem_1 = None
+        add: "f32[32, 1]" = torch.ops.aten.add.Tensor(getitem, 1e-05);  getitem = None
+        rsqrt: "f32[32, 1]" = torch.ops.aten.rsqrt.default(add);  add = None
+        mul: "f32[32, 128]" = torch.ops.aten.mul.Tensor(sub, rsqrt);  sub = rsqrt = None
+        mul_1: "f32[32, 128]" = torch.ops.aten.mul.Tensor(mul, arg3_1);  mul = arg3_1 = None
+        add_1: "f32[32, 128]" = torch.ops.aten.add.Tensor(mul_1, arg4_1);  mul_1 = arg4_1 = None
+        sigmoid: "f32[32, 128]" = torch.ops.aten.sigmoid.default(add_1)
+        mul_2: "f32[32, 128]" = torch.ops.aten.mul.Tensor(add_1, sigmoid);  add_1 = sigmoid = None
+        convert_element_type_6: "f16[32, 128]" = torch.ops.prims.convert_element_type.default(mul_2, torch.float16);  mul_2 = None
+        permute_1: "f16[128, 128]" = torch.ops.aten.permute.default(arg5_1, [1, 0]);  arg5_1 = None
+        
+        # No stacktrace found for following nodes
+        mm_default_1: "f16[32, 128]" = torch.ops.aten.mm.default(convert_element_type_6, permute_1);  convert_element_type_6 = permute_1 = None
+        add_tensor_1: "f16[32, 128]" = torch.ops.aten.add.Tensor(mm_default_1, arg6_1);  mm_default_1 = arg6_1 = None
+        
+         # File: /mnt/pytorch/torch/_dynamo/external_utils.py:70 in inner, code: return fn(*args, **kwargs)
+        convert_element_type_10: "f32[32, 128]" = torch.ops.prims.convert_element_type.default(add_tensor_1, torch.float32);  add_tensor_1 = None
+        var_mean_1 = torch.ops.aten.var_mean.correction(convert_element_type_10, [1], correction = 0, keepdim = True)
+        getitem_2: "f32[32, 1]" = var_mean_1[0]
+        getitem_3: "f32[32, 1]" = var_mean_1[1];  var_mean_1 = None
+        sub_1: "f32[32, 128]" = torch.ops.aten.sub.Tensor(convert_element_type_10, getitem_3);  convert_element_type_10 = getitem_3 = None
+        add_2: "f32[32, 1]" = torch.ops.aten.add.Tensor(getitem_2, 1e-05);  getitem_2 = None
+        rsqrt_1: "f32[32, 1]" = torch.ops.aten.rsqrt.default(add_2);  add_2 = None
+        mul_3: "f32[32, 128]" = torch.ops.aten.mul.Tensor(sub_1, rsqrt_1);  sub_1 = rsqrt_1 = None
+        mul_4: "f32[32, 128]" = torch.ops.aten.mul.Tensor(mul_3, arg7_1);  mul_3 = arg7_1 = None
+        add_3: "f32[32, 128]" = torch.ops.aten.add.Tensor(mul_4, arg8_1);  mul_4 = arg8_1 = None
+        sigmoid_1: "f32[32, 128]" = torch.ops.aten.sigmoid.default(add_3)
+        mul_5: "f32[32, 128]" = torch.ops.aten.mul.Tensor(add_3, sigmoid_1);  add_3 = sigmoid_1 = None
+        convert_element_type_13: "f16[32, 128]" = torch.ops.prims.convert_element_type.default(mul_5, torch.float16);  mul_5 = None
+        permute_2: "f16[128, 128]" = torch.ops.aten.permute.default(arg9_1, [1, 0]);  arg9_1 = None
+        
+        # No stacktrace found for following nodes
+        mm_default: "f16[32, 128]" = torch.ops.aten.mm.default(convert_element_type_13, permute_2);  convert_element_type_13 = permute_2 = None
+        add_tensor: "f16[32, 128]" = torch.ops.aten.add.Tensor(mm_default, arg10_1);  mm_default = arg10_1 = None
+        
+         # File: /mnt/pytorch/torch/_dynamo/external_utils.py:70 in inner, code: return fn(*args, **kwargs)
+        convert_element_type_17: "f32[32, 128]" = torch.ops.prims.convert_element_type.default(add_tensor, torch.float32);  add_tensor = None
+        var_mean_2 = torch.ops.aten.var_mean.correction(convert_element_type_17, [1], correction = 0, keepdim = True)
+        getitem_4: "f32[32, 1]" = var_mean_2[0]
+        getitem_5: "f32[32, 1]" = var_mean_2[1];  var_mean_2 = None
+        sub_2: "f32[32, 128]" = torch.ops.aten.sub.Tensor(convert_element_type_17, getitem_5);  convert_element_type_17 = getitem_5 = None
+        add_4: "f32[32, 1]" = torch.ops.aten.add.Tensor(getitem_4, 1e-05);  getitem_4 = None
+        rsqrt_2: "f32[32, 1]" = torch.ops.aten.rsqrt.default(add_4);  add_4 = None
+        mul_6: "f32[32, 128]" = torch.ops.aten.mul.Tensor(sub_2, rsqrt_2);  sub_2 = rsqrt_2 = None
+        mul_7: "f32[32, 128]" = torch.ops.aten.mul.Tensor(mul_6, arg11_1);  mul_6 = arg11_1 = None
+        add_5: "f32[32, 128]" = torch.ops.aten.add.Tensor(mul_7, arg12_1);  mul_7 = arg12_1 = None
+        sigmoid_2: "f32[32, 128]" = torch.ops.aten.sigmoid.default(add_5)
+        mul_8: "f32[32, 128]" = torch.ops.aten.mul.Tensor(add_5, sigmoid_2);  add_5 = sigmoid_2 = None
+        convert_element_type_20: "f16[32, 128]" = torch.ops.prims.convert_element_type.default(mul_8, torch.float16);  mul_8 = None
+        return (convert_element_type_20,)
+        
+
+==================================================
+将 Fx Graph lowering 为调度结点(Inductor IR):
+[ExternKernelSchedulerNode(name='op0'), FusedSchedulerNode(nodes=op1_op2_op4_op5), ExternKernelSchedulerNode(name='op6'), FusedSchedulerNode(nodes=op7_op8_op10_op11), ExternKernelSchedulerNode(name='op12'), FusedSchedulerNode(nodes=op13_op14_op16_op17)]
+前两个调度结点的内容为:
+外部结点（比如 matmul 算子，会直接调用 cuBLAS 或 cuDNN的二进制库中 的实现而不编译成 triton）: ExternKernelOut(
+  python_kernel_name='extern_kernels.mm',
+  name=buf0,
+  layout=FixedLayout('cuda:0', torch.float16, size=[32, 128], stride=[128, 1]),
+  inputs=[InputBuffer(name='arg2_1', layout=FixedLayout('cuda:0', torch.float16, size=[32, 128], stride=[128, 1])), ReinterpretView(
+    StorageBox(
+      InputBuffer(name='arg0_1', layout=FixedLayout('cuda:0', torch.float16, size=[128, 128], stride=[128, 1]))
+    ),
+    FixedLayout('cuda:0', torch.float16, size=[128, 128], stride=[1, 128]),
+    origins=OrderedSet([mm_default_2])
+  )],
+  constant_args=(),
+  kwargs={},
+  output_view=None,
+  python_kernel_name=extern_kernels.mm,
+  cpp_kernel_name=at::mm_out,
+  ordered_kwargs_for_cpp_kernel=(),
+  op_overload=None,
+  arg_properties=[{}, {}],
+  kwarg_properties=None,
+  unbacked_bindings={},
+  mutation_outputs=[],
+  origin_node=mm_default_2,
+  origins=OrderedSet([mm_default_2])
+)
+融合结点的第一个结点的内容（省略后续结点）:
+var_ranges = {p0: 32, p1: 128}
+index0 = 128*p0 + p1
+index1 = p1
+index2 = p0
+def body(self, ops):
+    get_index = self.get_index('index0')
+    load = ops.load('buf0', get_index)
+    get_index_1 = self.get_index('index1')
+    load_1 = ops.load('arg1_1', get_index_1)
+    add = ops.add(load, load_1)
+    to_dtype = ops.to_dtype(add, torch.float32, src_dtype = torch.float16)
+    reduction = ops.reduction(torch.float32, torch.float32, 'welford_reduce', to_dtype)
+    getitem = reduction[0]
+    getitem_1 = reduction[1]
+    getitem_2 = reduction[2]
+    get_index_2 = self.get_index('index2')
+    store_reduction = ops.store_reduction('buf1', get_index_2, getitem)
+    return store_reduction
+==================================================
+从 Inductor IR 编译生成了一份 Python 代码，其中包含生成的 Triton kernel（用于 GPU）或 Torch 内部 SIMD 算子实现的 kernel（用于 CPU），以及输入输出逻辑。在 Inductor 内部，这份代码会被自动执行，从而生成编译后的二进制库。
+路径为： /mnt/torchcompile-demo/compile_cache/notebook/example_2/eu/ceunrj7aevcholg44jnday4r3r7rvybuab6yhltzecgatuapxym4.py
+
+==================================================
+经过一次编译后的字节码
+ 68           0 COPY_FREE_VARS           1
+              2 RESUME                   0
+              4 LOAD_GLOBAL             11 (NULL + __compiled_fn_7)
+             14 LOAD_GLOBAL             13 (NULL + __import_torch_dot__dynamo_dot_utils)
+             24 COPY                     1
+             26 STORE_FAST               2 (tmp_0)
+             28 LOAD_ATTR               14 (dict_getitem)
+             48 COPY                     1
+             50 STORE_FAST               3 (tmp_1)
+             52 PUSH_NULL
+             54 LOAD_FAST                3 (tmp_1)
+             56 LOAD_DEREF              39 (fn)
+             58 COPY                     1
+             60 STORE_FAST               4 (tmp_2)
+             62 LOAD_ATTR               16 (_modules)
+             82 COPY                     1
+             84 STORE_FAST               5 (tmp_3)
+             86 COPY                     1
+             88 STORE_FAST               6 (tmp_4)
+             90 LOAD_CONST               1 ('fc_0')
+             92 CALL                     2
+            100 COPY                     1
+            102 STORE_FAST               7 (tmp_5)
+            104 LOAD_ATTR               18 (_parameters)
+            124 COPY                     1
+            126 STORE_FAST               8 (tmp_6)
+            128 COPY                     1
+            130 STORE_FAST               9 (tmp_7)
+            132 LOAD_CONST               2 ('weight')
+            134 CALL                     2
+            142 COPY                     1
+            144 STORE_FAST              10 (tmp_8)
+            146 PUSH_NULL
+            148 LOAD_FAST                3 (tmp_1)
+            150 LOAD_FAST                9 (tmp_7)
+            152 LOAD_CONST               3 ('bias')
+            154 CALL                     2
+            162 COPY                     1
+            164 STORE_FAST              11 (tmp_9)
+            166 LOAD_FAST                0 (args)
+            168 COPY                     1
+            170 STORE_FAST              12 (tmp_10)
+            172 LOAD_CONST               4 (0)
+            174 BINARY_SUBSCR
+            178 COPY                     1
+            180 STORE_FAST              13 (tmp_11)
+            182 PUSH_NULL
+            184 LOAD_FAST                3 (tmp_1)
+            186 PUSH_NULL
+            188 LOAD_FAST                3 (tmp_1)
+            190 LOAD_FAST                6 (tmp_4)
+            192 LOAD_CONST               5 ('ln_0')
+            194 CALL                     2
+            202 COPY                     1
+            204 STORE_FAST              14 (tmp_12)
+            206 LOAD_ATTR               18 (_parameters)
+            226 COPY                     1
+            228 STORE_FAST              15 (tmp_13)
+            230 COPY                     1
+            232 STORE_FAST              16 (tmp_14)
+            234 LOAD_CONST               2 ('weight')
+            236 CALL                     2
+            244 COPY                     1
+            246 STORE_FAST              17 (tmp_15)
+            248 PUSH_NULL
+            250 LOAD_FAST                3 (tmp_1)
+            252 LOAD_FAST               16 (tmp_14)
+            254 LOAD_CONST               3 ('bias')
+            256 CALL                     2
+            264 COPY                     1
+            266 STORE_FAST              18 (tmp_16)
+            268 PUSH_NULL
+            270 LOAD_FAST                3 (tmp_1)
+            272 PUSH_NULL
+            274 LOAD_FAST                3 (tmp_1)
+            276 LOAD_FAST                6 (tmp_4)
+            278 LOAD_CONST               6 ('fc_1')
+            280 CALL                     2
+            288 COPY                     1
+            290 STORE_FAST              19 (tmp_17)
+            292 LOAD_ATTR               18 (_parameters)
+            312 COPY                     1
+            314 STORE_FAST              20 (tmp_18)
+            316 COPY                     1
+            318 STORE_FAST              21 (tmp_19)
+            320 LOAD_CONST               2 ('weight')
+            322 CALL                     2
+            330 COPY                     1
+            332 STORE_FAST              22 (tmp_20)
+            334 PUSH_NULL
+            336 LOAD_FAST                3 (tmp_1)
+            338 LOAD_FAST               21 (tmp_19)
+            340 LOAD_CONST               3 ('bias')
+            342 CALL                     2
+            350 COPY                     1
+            352 STORE_FAST              23 (tmp_21)
+            354 PUSH_NULL
+            356 LOAD_FAST                3 (tmp_1)
+            358 PUSH_NULL
+            360 LOAD_FAST                3 (tmp_1)
+            362 LOAD_FAST                6 (tmp_4)
+            364 LOAD_CONST               7 ('ln_1')
+            366 CALL                     2
+            374 COPY                     1
+            376 STORE_FAST              24 (tmp_22)
+            378 LOAD_ATTR               18 (_parameters)
+            398 COPY                     1
+            400 STORE_FAST              25 (tmp_23)
+            402 COPY                     1
+            404 STORE_FAST              26 (tmp_24)
+            406 LOAD_CONST               2 ('weight')
+            408 CALL                     2
+            416 COPY                     1
+            418 STORE_FAST              27 (tmp_25)
+            420 PUSH_NULL
+            422 LOAD_FAST                3 (tmp_1)
+            424 LOAD_FAST               26 (tmp_24)
+            426 LOAD_CONST               3 ('bias')
+            428 CALL                     2
+            436 COPY                     1
+            438 STORE_FAST              28 (tmp_26)
+            440 PUSH_NULL
+            442 LOAD_FAST                3 (tmp_1)
+            444 PUSH_NULL
+            446 LOAD_FAST                3 (tmp_1)
+            448 LOAD_FAST                6 (tmp_4)
+            450 LOAD_CONST               8 ('fc_2')
+            452 CALL                     2
+            460 COPY                     1
+            462 STORE_FAST              29 (tmp_27)
+            464 LOAD_ATTR               18 (_parameters)
+            484 COPY                     1
+            486 STORE_FAST              30 (tmp_28)
+            488 COPY                     1
+            490 STORE_FAST              31 (tmp_29)
+            492 LOAD_CONST               2 ('weight')
+            494 CALL                     2
+            502 COPY                     1
+            504 STORE_FAST              32 (tmp_30)
+            506 PUSH_NULL
+            508 LOAD_FAST                3 (tmp_1)
+            510 LOAD_FAST               31 (tmp_29)
+            512 LOAD_CONST               3 ('bias')
+            514 CALL                     2
+            522 COPY                     1
+            524 STORE_FAST              33 (tmp_31)
+            526 PUSH_NULL
+            528 LOAD_FAST                3 (tmp_1)
+            530 PUSH_NULL
+            532 LOAD_FAST                3 (tmp_1)
+            534 LOAD_FAST                6 (tmp_4)
+            536 LOAD_CONST               9 ('ln_2')
+            538 CALL                     2
+            546 COPY                     1
+            548 STORE_FAST              34 (tmp_32)
+            550 LOAD_ATTR               18 (_parameters)
+            570 COPY                     1
+            572 STORE_FAST              35 (tmp_33)
+            574 COPY                     1
+            576 STORE_FAST              36 (tmp_34)
+            578 LOAD_CONST               2 ('weight')
+            580 CALL                     2
+            588 COPY                     1
+            590 STORE_FAST              37 (tmp_35)
+            592 PUSH_NULL
+            594 LOAD_FAST                3 (tmp_1)
+            596 LOAD_FAST               36 (tmp_34)
+            598 LOAD_CONST               3 ('bias')
+            600 CALL                     2
+            608 COPY                     1
+            610 STORE_FAST              38 (tmp_36)
+            612 CALL                    13
+            620 UNPACK_SEQUENCE          1
+            624 RETURN_VALUE
+None
