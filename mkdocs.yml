@@ -46,5 +46,5 @@ nav:
       - 头歌平台: common/educoder.md
   - 拓展阅读:
     - 词法分析:
-      - 从词法分析到LLM Tokenizer: further/lexer/tokenizer.md
+      - 从词法分析到LLM Tokenizer: further/tokenizer.md
     - 其他: further/further.md
