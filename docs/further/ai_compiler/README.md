@@ -48,7 +48,7 @@ pip install notebook
 
 ## 三、 PyTorch 2.0 编译流程概览
 
-`torch.compile` 的核心思想是将 Python 代码先转换为计算图，再对图进行优化和代码生成。整个流程可以根据您提供的架构图（如下图所示）分为**前端 (Frontend)** 和 **后端 (Backend)** 两个主要部分。
+`torch.compile` 的核心思想是将 Python 代码先转换为计算图，再对图进行优化和代码生成。整个流程（如下图所示）分为**前端 (Frontend)** 和 **后端 (Backend)** 两个主要部分。
 
 ![PT2 for Backend Integration](figures/torch2-backend.png)
 
