@@ -6,17 +6,17 @@ This README is a toturial of how to write and preview the docs.
 
 ## Development
 
-First install dependencies and init:
+First install dependencies and activate environment:
 
 ```bash
 # It's recommended to install in a virtual environment.
 uv sync
+source .venv/bin/activate # .venv/Scripts/activate.ps1 in Windows
 ```
 
 Then make your modifications. You can preview your changes by running:
 
 ```bash
-# In python environment
 mkdocs serve
 ```
 
