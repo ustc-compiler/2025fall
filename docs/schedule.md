@@ -47,7 +47,7 @@
 
 | 实验编号 | 发布时间 | 实验名称                                                                                                                                    | 截止时间 |
 | -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| 6        | 12-23    | [探索实验题目文档](./slides/课程探索题目-v1-图片.pdf) , [公共仓库](https://git.lug.ustc.edu.cn/compiler25)                                  | TBD      |
+| 6        | 12-23    | [探索实验题目文档](http://staff.ustc.edu.cn/~yuzhang/compiler/ExploreLab.pdf) , [公共仓库](https://git.lug.ustc.edu.cn/compiler25)                                  | TBD      |
 | 5        | 11-26    | [:link:](https://educoder.ustc.edu.cn/classrooms/brywn3xc/shixun_homework/531/detail?tabs=0) 为 SysYF 语言生成 LLVM IR 中间代码             | 12-08    |
 | 4        | 11-10    | [:link:](https://educoder.ustc.edu.cn/classrooms/brywn3xc/shixun_homework/528/detail?tabs=0) 构建 SysYF 语义检查器                          | 11-24    |
 | 3        | 10-24    | [:link:](https://educoder.ustc.edu.cn/classrooms/brywn3xc/shixun_homework/503/detail?tabs=0) 使用 Flex 和 Bison 构建 SysYF 词法和语法分析器 | 11-10    |
