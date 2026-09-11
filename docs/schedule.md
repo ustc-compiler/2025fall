@@ -45,16 +45,16 @@
 
 ## 实验
 
-| 实验编号 | 发布时间 | 实验名称                                                                                                                                    | 截止时间 |
-| -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| 6        | 12-23    | [探索实验题目文档](http://staff.ustc.edu.cn/~yuzhang/compiler/ExploreLab.pdf) , [公共仓库](https://git.lug.ustc.edu.cn/compiler25)          | TBD      |
-| 5        | 11-26    | [:link:](https://educoder.ustc.edu.cn/classrooms/brywn3xc/shixun_homework/531/detail?tabs=0) 为 SysYF 语言生成 LLVM IR 中间代码             | 12-08    |
-| 4        | 11-10    | [:link:](https://educoder.ustc.edu.cn/classrooms/brywn3xc/shixun_homework/528/detail?tabs=0) 构建 SysYF 语义检查器                          | 11-24    |
-| 3        | 10-24    | [:link:](https://educoder.ustc.edu.cn/classrooms/brywn3xc/shixun_homework/503/detail?tabs=0) 使用 Flex 和 Bison 构建 SysYF 词法和语法分析器 | 11-10    |
-| 2-2      | 09-29    | [:link:](https://educoder.ustc.edu.cn/classrooms/212/shixun_homework/501/detail?tabs=0) ANTLR4 的进阶应用 - 为 C1 语言构造解析器            | 10-20    |
-| 2-1      | 09-29    | [:link:](https://educoder.ustc.edu.cn/classrooms/212/shixun_homework/500/detail?tabs=0) ANTLR4 的基础应用 - 为正规式生成解析树              | 10-13    |
-| 1        | 09-18    | [:link:](https://educoder.ustc.edu.cn/classrooms/212/shixun_homework/495/detail?tabs=0) L1. 词法分析器的构造                                | 09-29    |
-| X2       | 09-18    | [:link:](https://educoder.ustc.edu.cn/classrooms/212/shixun_homework/497/detail?tabs=0) X2. 理解和使用 C++ 的智能指针 (选做)                | 09-29    |
-| X1       | 09-18    | [:link:](https://educoder.ustc.edu.cn/classrooms/212/shixun_homework/496/detail?tabs=0) X1. 理解和使用 C++ 运行时类型信息 (RTTI)(选做)      | 09-29    |
+| 实验编号 | 发布时间 | 实验名称                                                                                                                             | 截止时间 |
+| -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| 6        | 12-23    | [探索实验题目文档](http://staff.ustc.edu.cn/~yuzhang/compiler/ExploreLab.pdf) , [公共仓库](https://git.lug.ustc.edu.cn/compiler25)   | TBD      |
+| 5        | 11-26    | [:link:](http://211.86.155.200/classrooms/brywn3xc/shixun_homework/531/detail?tabs=0) 为 SysYF 语言生成 LLVM IR 中间代码             | 12-08    |
+| 4        | 11-10    | [:link:](http://211.86.155.200/classrooms/brywn3xc/shixun_homework/528/detail?tabs=0) 构建 SysYF 语义检查器                          | 11-24    |
+| 3        | 10-24    | [:link:](http://211.86.155.200/classrooms/brywn3xc/shixun_homework/503/detail?tabs=0) 使用 Flex 和 Bison 构建 SysYF 词法和语法分析器 | 11-10    |
+| 2-2      | 09-29    | [:link:](http://211.86.155.200/classrooms/212/shixun_homework/501/detail?tabs=0) ANTLR4 的进阶应用 - 为 C1 语言构造解析器            | 10-20    |
+| 2-1      | 09-29    | [:link:](http://211.86.155.200/classrooms/212/shixun_homework/500/detail?tabs=0) ANTLR4 的基础应用 - 为正规式生成解析树              | 10-13    |
+| 1        | 09-18    | [:link:](http://211.86.155.200/classrooms/212/shixun_homework/495/detail?tabs=0) L1. 词法分析器的构造                                | 09-29    |
+| X2       | 09-18    | [:link:](http://211.86.155.200/classrooms/212/shixun_homework/497/detail?tabs=0) X2. 理解和使用 C++ 的智能指针 (选做)                | 09-29    |
+| X1       | 09-18    | [:link:](http://211.86.155.200/classrooms/212/shixun_homework/496/detail?tabs=0) X1. 理解和使用 C++ 运行时类型信息 (RTTI)(选做)      | 09-29    |
 
 > [头歌平台使用与往期在线实验](./common/educoder.md)
