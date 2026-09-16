@@ -1,0 +1,1250 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../common/educoder/">
+      
+      
+        <link rel="next" href="../further/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>从词法分析到LLM Tokenizer - USTC 编译原理和技术(H) 2025</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#从词法分析到-llm-tokenizer" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="USTC 编译原理和技术(H) 2025" class="md-header__button md-logo" aria-label="USTC 编译原理和技术(H) 2025" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            USTC 编译原理和技术(H) 2025
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              从词法分析到LLM Tokenizer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ustc-compiler/2025fall" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ustc-compiler/2025fall
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  课程安排
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../common/simple_cpp/" class="md-tabs__link">
+          
+  
+  
+  公共文档
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  拓展阅读
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="USTC 编译原理和技术(H) 2025" class="md-nav__button md-logo" aria-label="USTC 编译原理和技术(H) 2025" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    USTC 编译原理和技术(H) 2025
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ustc-compiler/2025fall" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ustc-compiler/2025fall
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    首页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    课程安排
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    公共文档
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            公共文档
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/simple_cpp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    C++ 介绍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/ide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IDE 配置
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    平台介绍
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            平台介绍
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../common/educoder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    头歌平台
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    拓展阅读
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            拓展阅读
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    词法分析
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            词法分析
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    从词法分析到LLM Tokenizer
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    从词法分析到LLM Tokenizer
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-传统编译中的词法分析" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 传统编译中的词法分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 传统编译中的词法分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#特点" class="md-nav__link">
+    <span class="md-ellipsis">
+      特点
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-llm-中的-tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. LLM 中的 Tokenizer
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. LLM 中的 Tokenizer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#特点_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      特点
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-常见的分词策略" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 常见的分词策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 常见的分词策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-bpe-byte-pair-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      (1) BPE (Byte Pair Encoding)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-字节级-bpe-byte-level-bpe" class="md-nav__link">
+    <span class="md-ellipsis">
+      (2) 字节级 BPE (Byte-level BPE)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-wordpiece" class="md-nav__link">
+    <span class="md-ellipsis">
+      (3) WordPiece
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-sentencepiece" class="md-nav__link">
+    <span class="md-ellipsis">
+      (4) SentencePiece
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-多模态大模型的分词" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 多模态大模型的分词
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 多模态大模型的分词">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#图像-tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      图像 Tokenizer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音频-tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      音频 Tokenizer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#视频时序图像tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      视频（时序图像）Tokenizer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#一些挑战" class="md-nav__link">
+    <span class="md-ellipsis">
+      一些挑战
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-小结" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 小结
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#研究探索问题" class="md-nav__link">
+    <span class="md-ellipsis">
+      研究探索问题
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../further/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    其他
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="从词法分析到-llm-tokenizer">从词法分析到 LLM Tokenizer<a class="headerlink" href="#从词法分析到-llm-tokenizer" title="Permanent link">&para;</a></h1>
+<h2 id="1-传统编译中的词法分析">1. 传统编译中的词法分析<a class="headerlink" href="#1-传统编译中的词法分析" title="Permanent link">&para;</a></h2>
+<p>在经典的编译器结构中，<strong>词法分析（Lexical Analysis）</strong> 是前端的第一步。它的任务是：</p>
+<ul>
+<li>接收源代码的字符流；</li>
+<li>根据语言的词法规则，将字符分组为 <strong>词法单元（tokens）</strong>，如关键字、标识符、数字、运算符等；</li>
+<li>为语法分析器提供一系列 token 序列。</li>
+</ul>
+<h4 id="特点">特点<a class="headerlink" href="#特点" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>确定性规则</strong>：通常用正则表达式、有限自动机实现；</li>
+<li><strong>无歧义性</strong>：同一段输入总能得到唯一的分词结果；</li>
+<li><strong>面向编程语言</strong>：规则依赖于编程语言的定义（例如 C 的关键字、Python 的缩进）。</li>
+</ul>
+<hr />
+<h2 id="2-llm-中的-tokenizer">2. LLM 中的 Tokenizer<a class="headerlink" href="#2-llm-中的-tokenizer" title="Permanent link">&para;</a></h2>
+<p>在大语言模型（LLM）中，<strong>分词器（tokenizer）</strong> 扮演了类似词法分析器的角色：</p>
+<ul>
+<li>输入：自然语言（甚至多模态输入，如文本、图片描述、emoji）；</li>
+<li>输出：<strong>tokens</strong>，即模型的最小处理单元；</li>
+<li>这些 tokens 会被进一步映射为整数 ID，供模型嵌入层使用。</li>
+</ul>
+<h4 id="特点_1">特点<a class="headerlink" href="#特点_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>统计驱动</strong>：分词规则不是人工定义的，而是从大规模语料中学习得到；</li>
+<li><strong>多样性</strong>：不同模型使用不同的分词策略，如 <a href="https://arxiv.org/abs/1508.07909">BPE</a>、<a href="https://ieeexplore.ieee.org/document/6289079">WordPiece</a>、<a href="https://arxiv.org/abs/1808.06226">SentencePiece</a>；</li>
+<li><strong>成本相关</strong>：tokens 是推理和计费的基本单位，分词方式直接影响上下文窗口和费用。</li>
+</ul>
+<hr />
+<p><strong>对比</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">特征</th>
+<th style="text-align: left;">传统词法分析器</th>
+<th style="text-align: left;">LLM Tokenizer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>规则来源</strong></td>
+<td style="text-align: left;"><strong>人工定义</strong>：基于严格的语言文法</td>
+<td style="text-align: left;"><strong>统计学习</strong>：基于海量语料的概率分布</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>处理对象</strong></td>
+<td style="text-align: left;"><strong>单一且封闭</strong>：特定的编程语言</td>
+<td style="text-align: left;"><strong>多样且开放</strong>：跨语言、多模态的自然文本</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>结果</strong></td>
+<td style="text-align: left;"><strong>确定且唯一</strong>：输入相同，输出永远相同</td>
+<td style="text-align: left;"><strong>依赖模型</strong>：不同模型、不同算法会产生不同的分词结果</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>词汇表</strong></td>
+<td style="text-align: left;"><strong>有限</strong>：关键字、操作符等数量固定</td>
+<td style="text-align: left;"><strong>巨大但有限</strong>：通常包含数万到数十万个子词单元</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>错误处理</strong></td>
+<td style="text-align: left;">报告语法错误，如遇到非法字符</td>
+<td style="text-align: left;">极强的容错性，几乎没有无法处理的输入（Out-of-Vocabulary,OOV 问题）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-常见的分词策略">3. 常见的分词策略<a class="headerlink" href="#3-常见的分词策略" title="Permanent link">&para;</a></h2>
+<h3 id="1-bpe-byte-pair-encoding">(1) BPE (Byte Pair Encoding)<a class="headerlink" href="#1-bpe-byte-pair-encoding" title="Permanent link">&para;</a></h3>
+<p>BPE 最初是一种 <strong>数据压缩算法</strong>（用于减少文件大小），后来被 NLP 借用来做子词（subword）分词。它的核心思想是：</p>
+<ul>
+<li><strong>从最小单元开始（通常是字符或字节）</strong>；</li>
+<li><strong>反复合并高频的相邻单元对</strong>；逐步得到越来越大的“子词单元”，作为 tokenizer 的词汇表。</li>
+</ul>
+<p>BPE 的过程就像在学习一个新词。一开始你只认识 "e" 和 "r"，当 "er" 出现次数足够多时，你就把它当成一个整体来记，包含了“更加”的含义。然后你又学会了 "est"，最终你可能把 "newest" 当作一个完整的词汇单元。</p>
+<p>举个例子，假设我们的语料库只有三个单词：<code>low</code>, <code>lower</code>, <code>newest</code>。我们希望通过 BPE 构建一个子词词汇表。</p>
+<p><strong>Step 1. 初始化词表</strong></p>
+<ul>
+<li>以字符为基本单元，比如单词 <code>low</code>, <code>lower</code>, <code>newest</code>。</li>
+<li>初始词表 = 所有字符： <code>{l, o, w, e, r, n, s, t}</code>。</li>
+</ul>
+<p><strong>Step 2. 构建语料的符号序列</strong></p>
+<ul>
+<li>
+<p>把语料库的单词写成字符序列：</p>
+<p><code>low    → l o w
+lower  → l o w e r
+newest → n e w e s t</code></p>
+</li>
+</ul>
+<p><strong>Step 3. 统计相邻符号对的频率</strong></p>
+<ul>
+<li>例如：<ul>
+<li><code>l o</code> 出现 2 次，</li>
+<li><code>o w</code> 出现 2 次，</li>
+<li><code>e r</code> 出现 1 次……</li>
+</ul>
+</li>
+</ul>
+<p><strong>Step 4. 合并出现频率最高的符号对</strong></p>
+<ul>
+<li>
+<p>假设第一步合并 <code>o w</code> → <code>ow</code>，更新语料：</p>
+<p><code>l ow
+l ow e r
+n e w e s t</code></p>
+</li>
+</ul>
+<p><strong>Step 5. 重复 Step 3-4</strong></p>
+<ul>
+<li>下一步可能合并 <code>l ow</code> → <code>low</code>，再合并 <code>e s</code> → <code>es</code>，再合并 <code>es t</code> → <code>est</code>。</li>
+<li>最终词表可能包含：<code>low</code>, <code>er</code>, <code>new</code>, <code>est</code>。</li>
+</ul>
+<p><strong>Step 6. 直到词表大小达到设定阈值</strong></p>
+<ul>
+<li>一般提前设定词表大小，比如 30k 或 50k。</li>
+<li>算法不断合并，直到词表增长到这个大小为止。</li>
+</ul>
+<p><strong>BPE 的直观理解</strong></p>
+<ul>
+<li>高频子串 → 合并成更大的单元（减少 token 数量）；</li>
+<li>低频子串 → 继续保持细粒度（避免 OOV）。</li>
+<li>最终，常见词（<code>new</code>, <code>low</code>, <code>est</code>）会作为整体 token，生僻词会拆成多个子词。</li>
+</ul>
+<p>BPE 是目前最常用的分词方法之一，目前流行的 Qwen3 系列模型均采用 BPE 分词。比如可以尝试下面的代码，单独加载它的 Tokenizer，并尝试将一些句子分词：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;Qwen/Qwen3-0.6B&quot;</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello, I love University of Science and Technology of China&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+</code></pre></div>
+
+<p>会得到如下输出：</p>
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;ĠI&#39;</span><span class="p">,</span> <span class="s1">&#39;Ġlove&#39;</span><span class="p">,</span> <span class="s1">&#39;ĠUniversity&#39;</span><span class="p">,</span> <span class="s1">&#39;Ġof&#39;</span><span class="p">,</span> <span class="s1">&#39;ĠScience&#39;</span><span class="p">,</span> <span class="s1">&#39;Ġand&#39;</span><span class="p">,</span> <span class="s1">&#39;ĠTechnology&#39;</span><span class="p">,</span> <span class="s1">&#39;Ġof&#39;</span><span class="p">,</span> <span class="s1">&#39;ĠChina&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+<p>可以看到原句中的单词和标点符号合理地被拆分成了多个 token。其中的字符 <code>Ġ</code> 表示空格，是 BPE 分词的一个特点。</p>
+<h3 id="2-字节级-bpe-byte-level-bpe">(2) 字节级 BPE (Byte-level BPE)<a class="headerlink" href="#2-字节级-bpe-byte-level-bpe" title="Permanent link">&para;</a></h3>
+<ul>
+<li>改进版 BPE，以字节为基本单位；</li>
+<li>优点：支持任意输入，无 OOV（未登录词）；</li>
+<li>缺点：中文、emoji 等可能被拆分成多个“乱码”式 token。</li>
+</ul>
+<p>基础的 BPE 分词会以<code>字符</code>为基本单位，对于纯英文文本效果很好，但对于中文、日文、甚至 emoji 等非拉丁字符，如果不加改进，将 Unicode 所有字符都纳入词汇表，词汇表会变得非常庞大，且仍然无法覆盖所有可能的字符。</p>
+<p>字节级 BPE 的思路是：任何文本最终都是由字节（byte）构成的，因此直接以<code>字节</code>为基本单位进行 BPE 分词。这样一来，无论是中文、日文还是 emoji，在它眼里都是字节序列，永远不会出现无法处理的输入。</p>
+<p>所以 Qwen3 系列模型的 Tokenizer 实际上是字节级 BPE 的实现。可以尝试下面的代码，分词一些中文句子：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;我爱中国科学技术大学&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+</code></pre></div>
+
+<p>可能会直接得到类似于乱码的输出：</p>
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="s1">&#39;æĪĳ&#39;</span><span class="p">,</span> <span class="s1">&#39;çĪ±&#39;</span><span class="p">,</span> <span class="s1">&#39;ä¸ŃåĽ½&#39;</span><span class="p">,</span> <span class="s1">&#39;ç§ĳåŃ¦æĬĢæľ¯&#39;</span><span class="p">,</span> <span class="s1">&#39;å¤§åŃ¦&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+<p>这些拆分的 tokens 实际上是字节级的，不过我们可以重新转换为字符串看看：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;我爱中国科学技术大学&quot;</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+<span class="n">strings</span> <span class="o">=</span> <span class="p">[</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_string</span><span class="p">([</span><span class="n">t</span><span class="p">])</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+</code></pre></div>
+
+<p>就能看到正常的文字了：</p>
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="s1">&#39;我&#39;</span><span class="p">,</span> <span class="s1">&#39;爱&#39;</span><span class="p">,</span> <span class="s1">&#39;中国&#39;</span><span class="p">,</span> <span class="s1">&#39;科学技术&#39;</span><span class="p">,</span> <span class="s1">&#39;大学&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+<p>读者也可尝试一些更复杂的句子，看看分词效果，像是混合了多种语言的句子，如</p>
+<div class="codehilite"><pre><span></span><code>My手机のbattery快要dead了，我必须要find一个power bankすぐに！Otherwise我无法post我的new videoです。
+</code></pre></div>
+
+<h3 id="3-wordpiece">(3) WordPiece<a class="headerlink" href="#3-wordpiece" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>思想</strong>：起源于 BERT，基于概率最大化原则。<ul>
+<li>给定一个词，选择的子词划分应使得 <strong>训练语料中整体概率最大</strong>。</li>
+<li>核心公式为：</li>
+</ul>
+</li>
+</ul>
+<div class="arithmatex">\[
+\text{score} = \frac{\text{freq\_of\_pair}}{\text{freq\_of\_first\_element} \times \text{freq\_of\_second\_element}}
+\]</div>
+<ul>
+<li><strong>优点</strong>：<ul>
+<li>对低频词能合理拆分；</li>
+<li>分词结果稳定，不容易产生奇怪的片段。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>算法相对复杂，训练成本高于 BPE。</li>
+</ul>
+</li>
+<li><strong>应用</strong>：BERT、RoBERTa 等模型。</li>
+</ul>
+<h3 id="4-sentencepiece">(4) SentencePiece<a class="headerlink" href="#4-sentencepiece" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>思想</strong>：由 Google 提出，可以基于 <strong>BPE 或 Unigram 语言模型</strong>，直接在原始文本（无需预分词）上训练。<ul>
+<li>自上而下，首先用巨大的种子词汇表初始化，逐步移除对整体分词质量贡献最小的词汇，直到词汇表缩小到目标大小</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>与语言无关，不依赖空格作为分词边界；</li>
+<li>常用于多语言模型，支持中文、日文等没有空格的语言。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>Unigram LM 的计算相对复杂。</li>
+</ul>
+</li>
+<li><strong>应用</strong>：T5、mT5、ALBERT、LLaMA 系列。</li>
+</ul>
+<hr />
+<h2 id="4-多模态大模型的分词">4. 多模态大模型的分词<a class="headerlink" href="#4-多模态大模型的分词" title="Permanent link">&para;</a></h2>
+<p>把不同模态的原始输入映射为统一的<strong>离散表示</strong>(token 序列)
+图像/语音/视频等是连续模态，需将像素/波形等连续信号编码成离散 token</p>
+<h3 id="图像-tokenizer">图像 Tokenizer<a class="headerlink" href="#图像-tokenizer" title="Permanent link">&para;</a></h3>
+<ul>
+<li>使用向量量化，将图像分块编码到离散的 codebook(码本，即词典)，如 Imagen、Stable Diffusion</li>
+<li>图像切成 patch，再编码成 token，如 ViT Patch Embedding+ 离散化、Clip(直接 embedding)</li>
+<li>分层量化：多级量化器编码图像，如 RQ-VAE 等</li>
+</ul>
+<h3 id="音频-tokenizer">音频 Tokenizer<a class="headerlink" href="#音频-tokenizer" title="Permanent link">&para;</a></h3>
+<ul>
+<li>把原始波形压缩成离散码字序列，常用于音乐生成（MusicLM、AudioLM）</li>
+<li>Residual Vector Quantization，高效表示音频信号</li>
+</ul>
+<h3 id="视频时序图像tokenizer">视频（时序图像）Tokenizer<a class="headerlink" href="#视频时序图像tokenizer" title="Permanent link">&para;</a></h3>
+<ul>
+<li>图像 Tokenizer + 时间建模（逐帧离散化，再建模时序关系）</li>
+<li>3D VQ-VAE：直接在时空域做离散化</li>
+</ul>
+<p><strong>多模态统一 Tokenizer：让不同模态共享词汇表</strong></p>
+<h3 id="一些挑战">一些挑战<a class="headerlink" href="#一些挑战" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>模态的差异性：</strong> 如何权衡压缩信息量和保持语义细节</li>
+<li><strong>Token 粒度选择：</strong> 如何权衡粒度与效率<ul>
+<li>图像：patch 太小➔token 数过多；patch 太大➔丢失局部信息</li>
+<li>音频：时间片过短➔序列过长；时间片过长➔难捕捉细节（音色、情感等）</li>
+<li>序列长度与计算开销</li>
+<li>图像/视频 token 数量远超文本；视频包含时间维度，token 序列可能是文本的 数百倍</li>
+</ul>
+</li>
+<li><strong>跨模态语义对齐：</strong> 如何在统一空间中互相理解<ul>
+<li>不同模态的 token 在信息含义和统计分布上差异巨大</li>
+<li>如何让“文本词元”和“图像 patch token”在共享空间里表示相近语义</li>
+</ul>
+</li>
+<li><strong>信息压缩与保真：</strong> 避免 token 化带来的语义缺失<ul>
+<li>离散化不可避免带来信息丢失：丢失纹理、音色等；对下游生成与理解任务都会造成影响</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="5-小结">5. 小结<a class="headerlink" href="#5-小结" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>编译器词法分析</strong> 与 <strong>LLM Tokenizer</strong> 在功能上相似：都要把原始符号转化为可处理的单元；</li>
+<li>不同点在于：编译器依赖人工规则，LLM 依赖统计学习；</li>
+<li>常见分词方法包括 BPE、字节级 BPE、WordPiece 和 SentencePiece，它们直接影响模型的性能、鲁棒性和使用成本。</li>
+</ul>
+<h2 id="研究探索问题">研究探索问题<a class="headerlink" href="#研究探索问题" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>现状理解</strong>：调研某种模态或多模态的表征方法及应用场景，结合使用和源码分析，指出其的优缺点</li>
+<li><strong>自由探索</strong>：给出探索问题，形成小组，制定计划，工作记录（问题/进展总结与分析），测试基准，实验及评估</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a href="https://arxiv.org/abs/1508.07909">BPE 原始文章《Neural Machine Translation of Rare Words with Subword Units》</a></li>
+<li><a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">GPT-2 技术报告（包含字节级 BPE）《Language Models are Unsupervised Multitask Learners》</a></li>
+<li><a href="https://static.googleusercontent.com/media/research.google.com/ja//pubs/archive/37842.pdf">WordPiece 原始文章《JAPANESE AND KOREAN VOICE SEARCH》</a></li>
+<li><a href="https://arxiv.org/abs/1808.06226">SentencePiece 原始文章《SentencePiece: A simple and language independent subword tokenizer and detokenizer for Neural Text Processing》</a></li>
+<li><a href="https://huggingface.co/docs/transformers/tokenizer_summary">Huggingface 博客《Summary of the tokenizers》</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.tabs", "toc.integrate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
